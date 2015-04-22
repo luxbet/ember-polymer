@@ -2,47 +2,44 @@
 // 'use strict';
 
 var vulcanize = require('broccoli-vulcanize');
+var Funnel = require('broccoli-funnel');
+var mergeTrees  = require('mergeTrees');
 
 module.exports = {
   name: 'ember-polymer',
 
-  contentFor: function(type, config) {
-    if (type === 'head') {
+  contentFor: function contentFor(type, config) {
+    if (type === 'head-footer') {
       return [
-        '<script src="assets/webcomponentsjs/webcomponents.js"></script>',
-        '<link rel="import" href="assets/vulcanized.html">'
+        '<script src="public/webcomponents-lite.js"></script>',
+        '<link rel="import" href="elements.html">'
       ];
     }
   },
-
-  postprocessTree: function(type, tree) {
-    if (!tree) {
-      return tree;
-    }
-
-    var polymerVulcanize = vulcanize('app', {
+  
+  treeForApp: function treeForPublic(tree) {
+    var vulcanized = vulcanize('app', {
       input: 'elements.html',
-      output: '/assets/vulcanized.html',
       csp: true,
       inline: true,
-      strip: false,
+      strip: !this.isDevelopingAddon(),
       excludes: {
         imports: ["(^data:)|(^http[s]?:)|(^\/)"],
         scripts: ["(^data:)|(^http[s]?:)|(^\/)"],
         styles: ["(^data:)|(^http[s]?:)|(^\/)"]
       }
+    );
+    
+    return mergeTrees([tree, vulcanized]);
+  },
+  
+  treeForPublic: function treeForPublic(tree) {
+    var webcomponents = new Funnel('bower_components/webcomponentsjs', {
+      srcDir: '/',
+      include: ['webcomponents-lite.js'],
+      destDir: '/'
     });
-
-    var polymer = this.pickFiles('bower_components/', {
-      srcDir: '',
-      files: [
-      'webcomponentsjs/webcomponents.js',
-      'polymer/polymer.js',
-      'polymer/polymer.html'
-      ],
-      destDir: '/assets'
-    });
-
-    return this.mergeTrees([polymerVulcanize, polymer, tree]);
+    
+    return mergeTrees([tree, webcomponents]);
   }
 };

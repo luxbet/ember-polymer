@@ -12,11 +12,6 @@
     "ember-load-initializers": "stefanpenner/ember-load-initializers#0.0.2",
     "ember-qunit": "0.1.8",
     "ember-qunit-notifications": "0.0.4",
-    "qunit": "~1.15.0",
-    "polymer": "Polymer/polymer#~0.5.2"
-  },
-  "devDependencies": {
-    "core-elements": "Polymer/core-elements#~0.5.2",
-    "paper-elements": "Polymer/paper-elements#~0.5.2"
+    "qunit": "~1.15.0"
   }
 }

@@ -20,9 +20,10 @@
   "dependencies": {
     "broccoli-funnel": "^0.2.3",
     "broccoli-merge-trees": "^0.2.1",
-    "broccoli-vulcanize": "^1.0.4"
+    "broccoli-vulcanize": "^1.0.0"
   },
   "devDependencies": {
+    "bluebird": "^2.9.34",
     "broccoli-asset-rev": "^1.0.0",
     "ember-cli": "0.1.4",
     "ember-cli-content-security-policy": "0.3.0",
@@ -35,7 +36,8 @@
     "ember-data": "1.0.0-beta.14",
     "ember-export-application-global": "^1.0.0",
     "express": "^4.8.5",
-    "glob": "^4.0.5"
+    "glob": "^4.0.5",
+    "html-autoprefixer": "^0.3.7"
   },
   "description": "Polymer integration with ember-cli.",
   "keywords": [

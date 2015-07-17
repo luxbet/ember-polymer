@@ -4,6 +4,9 @@
 var vulcanize = require('broccoli-vulcanize');
 var funnel = require('broccoli-funnel');
 var mergeTrees  = require('broccoli-merge-trees');
+var BPromise = require('bluebird');
+var htmlAutoprefixer = require('html-autoprefixer');
+var fs = require('fs');
 
 module.exports = {
   name: 'ember-polymer',
@@ -12,7 +15,7 @@ module.exports = {
     if (type === 'head-footer') {
       return [
         '<script src="webcomponents.js"></script>',
-        '<link rel="import" href="elements.html">'
+        '<link rel="import" href="' + this.parent.pkg.name + '-vulcanized.html">'
       ];
     }
   },
@@ -24,8 +27,9 @@ module.exports = {
       destDir: '/'
     });
 
-    var vulcanized = vulcanize('app', {
-      input: 'elements.html',
+    var vulcanized = vulcanize('elements', {
+      input: 'index.html',
+      output: this.parent.pkg.name + '-vulcanized.html',
       csp: true,
       inline: true,
       strip: true,
@@ -33,6 +37,9 @@ module.exports = {
         imports: ["(^data:)|(^http[s]?:)|(^\/)"],
         scripts: ["(^data:)|(^http[s]?:)|(^\/)"],
         styles: ["(^data:)|(^http[s]?:)|(^\/)"]
+      },
+      outputHandler: function(filename, data) {
+        fs.writeFileSync(filename, htmlAutoprefixer.process(data, null, {browsers: ['last 2 versions'], cascade: false, safe: true}));
       }
     });
 

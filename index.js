@@ -39,7 +39,11 @@ module.exports = {
         styles: ["(^data:)|(^http[s]?:)|(^\/)"]
       },
       outputHandler: function(filename, data) {
-        fs.writeFileSync(filename, htmlAutoprefixer.process(data, null, {browsers: ['last 2 versions'], cascade: false, safe: true}));
+        if (filename.match(/\.html$/)) {
+          fs.writeFileSync(filename, htmlAutoprefixer.process(data, null, {browsers: ['last 2 versions'], cascade: false, safe: true}));
+        } else {
+          fs.writeFileSync(filename, data);
+        }
       }
     });
 

@@ -14,8 +14,8 @@ module.exports = {
   contentFor: function(type, config) {
     if (type === 'head-footer') {
       return [
-        '<script src="webcomponents.js"></script>',
-        '<link rel="import" href="' + this.parent.pkg.name + '-vulcanized.html">'
+        '<script src="assets/webcomponents.js"></script>',
+        '<link rel="import" href="assets/' + this.parent.pkg.name + '-vulcanized.html">'
       ];
     }
   },
@@ -24,12 +24,12 @@ module.exports = {
     var webcomponents = funnel('bower_components/webcomponentsjs', {
       srcDir: '/',
       files: ['webcomponents.js'],
-      destDir: '/'
+      destDir: '/assets'
     });
 
     var vulcanized = vulcanize('elements', {
       input: 'index.html',
-      output: this.parent.pkg.name + '-vulcanized.html',
+      output: 'assets/' + this.parent.pkg.name + '-vulcanized.html',
       csp: true,
       inline: true,
       strip: true,

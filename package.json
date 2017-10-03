@@ -21,7 +21,8 @@
     "broccoli-funnel": "^0.2.3",
     "broccoli-merge-trees": "^0.2.1",
     "broccoli-vulcanize": "^1.0.0",
-    "html-autoprefixer": "0.3.7"
+    "html-autoprefixer": "^0.3.7",
+    "postcss-safe-parser": "^1.0.1"
   },
   "devDependencies": {
     "bluebird": "^2.9.34",

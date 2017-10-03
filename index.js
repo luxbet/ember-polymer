@@ -6,6 +6,7 @@ var funnel = require('broccoli-funnel');
 var mergeTrees  = require('broccoli-merge-trees');
 var BPromise = require('bluebird');
 var htmlAutoprefixer = require('html-autoprefixer');
+var safe = require('postcss-safe-parser');
 var fs = require('fs');
 
 module.exports = {
@@ -40,7 +41,7 @@ module.exports = {
       },
       outputHandler: function(filename, data) {
         if (filename.match(/\.html$/)) {
-          fs.writeFileSync(filename, htmlAutoprefixer.process(data, null, {browsers: ['last 2 versions'], cascade: false, safe: true}));
+          fs.writeFileSync(filename, htmlAutoprefixer.process(data, null, {browsers: ['last 2 versions'], cascade: false, parser: safe}));
         } else {
           fs.writeFileSync(filename, data);
         }
